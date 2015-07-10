@@ -1,0 +1,38 @@
+- content_for :sub_nav do
+  = render 'sub_nav', :active_action=>'index'
+
+- content_for :main_column do
+  %section.default-content.clearfix
+    %h3.icon.green-dot
+      ACTIVE RUNNING AUCTIONS
+      - tip = "Your currently active MuddleMe auctions."
+      = image_tag 'pixel.gif', :class=>'qmark', :title=>tip
+    %hr.for-table
+    #in_progress_auctions_wrap
+      = render 'auction_list', :type=>:in_progress
+    - unless @auctions_unconfirmed.blank?
+      %h3.icon.orange-dot
+        OUTCOME PENDING ON AUCTIONS
+        - tip = "Your MuddleMe auctions currently pending outcome."
+        = image_tag 'pixel.gif', :class=>'qmark', :title=>tip
+      %hr.for-table
+      #unconfirmed_auctions_wrap
+        = render 'auction_list', :type=>:unconfirmed
+    %h3.icon.red-dot
+      FINISHED AUCTIONS
+      - tip = "Your completed MuddleMe auctions."
+      = image_tag 'pixel.gif', :class=>'qmark', :title=>tip
+    %hr.for-table
+    #finished_auctions_wrap
+      = render 'auction_list', :type=>:finished
+
+= render 'users/shared/header_score'
+%h2 My auctions
+= render 'layouts/application/one_column'
+
+- content_for :javascripts do 
+  %script
+    :plain
+      simpleAjaxPagination('#in_progress_auctions_wrap');
+      simpleAjaxPagination('#finished_auctions_wrap');
+      simpleAjaxPagination('#unconfirmed_auctions_wrap');

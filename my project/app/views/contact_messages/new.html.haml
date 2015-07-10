@@ -1,0 +1,11 @@
+- content_for :main_column do
+  %section.default-content
+    %article.column
+      %p
+        If you experience problems using the site, please use the form below to report your issue.
+        Please try to include as much information as you can, especially info about operating
+        system and browser versions.
+      = render "form"
+
+%h2 Contact Us
+= render 'layouts/application/one_column'

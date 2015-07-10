@@ -1,0 +1,7 @@
+<% if @email_content.hello_sub_text.blank? %>
+Hey everbody, check out this new website: MuddleMe.com. In todays economy companies want to pay for your email address! How cool is that? Follow this link and register:
+<% else %>
+<%= prepare_email_content(@email_content.hello_sub_text, :user => @user) %>
+<% end %>
+
+<%= referred_by_user_url(@user.encoded_id) %>

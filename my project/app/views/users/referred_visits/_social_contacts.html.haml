@@ -1,0 +1,19 @@
+%article#social-contacts.details-preview
+  %p
+    %span.label Invite friends via Facebook and Twitter:
+    %br
+    %br
+  - default_text = "Get paid for everything you do as well as what your friends do at muddleme.com. The only platform that pays you when you invite friends, use coupons, call merchants and buy products and services."
+  %div.input
+    = text_area_tag 'social_text', default_text
+  %div.actions.clearfix
+    %a{:id => "post-to-facebook", |
+    :href=>"http://www.facebook.com/sharer.php?u=#{referral_url}&t=#{default_text}", |
+    :"data-href"=>"http://www.facebook.com/sharer.php?u=#{CGI::escape(CGI::escape(referral_url))}&t=_text_"}
+      %span.ir#facebook-small
+      %span.txt Post to Facebook
+    %a{:id=> "post-to-twitter", |
+    :href=>"http://twitter.com/home?status=#{default_text + " " + referral_url}", |
+    :"data-href"=>"http://twitter.com/home?status=_text_ " + referral_url}
+      %span.ir#twitter-small
+      %span.txt Post to Twitter

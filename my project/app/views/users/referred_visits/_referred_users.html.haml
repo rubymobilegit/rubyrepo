@@ -1,0 +1,15 @@
+%article#referred-users.details-preview
+  %h3 FRIEND INVITE STATISTICS
+  %hr.for-table
+  #referred_users_table_wrap
+    = render 'referred_users_table'
+  #stats
+    %p
+      %span.label= 'Number of referrals:'
+      %span.highlight= referred_visits_count = current_user.referred_visits.count
+    %p
+      %span.label= 'Registered users: '
+      %span.highlight= @referred_users.total_entries
+    %p
+      %span.label= 'Conversion rate: '
+      %span.highlight= referred_visits_count == 0 ? "0%" : "#{((@referred_users.total_entries.to_f/referred_visits_count.to_f)*100).round.to_i}%"

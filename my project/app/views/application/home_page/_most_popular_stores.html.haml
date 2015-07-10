@@ -1,0 +1,72 @@
+
+- mps_array = ProductCategory::MOST_POPULAR_STORES
+- mps_array = mps_array.sort
+- alphabet = ''
+- if mps_array.present?
+
+  %section
+    .part-12
+      .container
+        .top-part
+          .col-md-4
+            %hr/
+          .col-md-4.text-center
+            %h1 Most Popular Stores
+          .col-md-4
+            %hr/
+    .part-12.padding-top
+      .container
+        .bottom-art
+          - mps_array.group_by{|u| u.first[0]}.each do|alphabet, data_array|
+            - if alphabet == "A"
+              .search-menu.exceptional-search
+                %a{:href => "#"}
+                  = alphabet
+                  %i.fa.fa-bars
+              .col-lg-2.col-md-2.col-sm-4.col-xs-6
+                
+                - data_array.each do |category, merchants|
+                  .box{:style => "margin-bottom:20px;margin-top: 20px;"}
+                    %h3= category
+                    %ul
+                      - merchants.each do |m|
+                        %li
+                          - merchant = ProductCategory.get_merchant(m)
+                          - if merchant.present?
+                            - merchant_name = merchant.name.titleize
+                            - if merchant_name.include? "Nhl"
+                              - merchant_name = merchant_name.gsub("Nhl", "NHL")
+                            - if merchant_name.include? "Nba"
+                              - merchant_name = merchant_name.gsub("Nba", "NBA")
+
+                            = link_to "#{merchant_name}", merchant.advertiser_url, :id => "merchant_popup_#{merchant.advertiser_id}", :class => "mpc_link", :onclick => "generate_popup(this.id, #{merchant.advertiser_id}, #{merchant.coupons.blank?}); return false;"
+                            = link_to "coupon_window", mm_prompt_cc_window_path(:ad => merchant.advertiser_id, :type => merchant.class.name, :offer_url => merchant.advertiser_url), :style => "display:none;", :id => "merchant_c_window_#{merchant.advertiser_id}"
+                          - else
+                            = link_to "#{m}", "javascript:void(0);", :id => "merchant_popup_", :class => "mpc_link"
+
+
+            - else
+              .col-lg-2.col-md-2.col-sm-4.col-xs-6
+                .search-menu
+                  %a{:href => "#"}
+                    = alphabet
+                    %i.fa.fa-bars
+
+                - data_array.each do |category, merchants|
+                  .box{:style => "margin-top: 20px;"}
+                    %h3= category
+                    %ul
+                      - merchants.each do |m|
+                        %li
+                          - merchant = ProductCategory.get_merchant(m)
+                          - if merchant.present?
+                            - merchant_name = merchant.name.titleize
+                            - if merchant_name.include? "Nhl"
+                              - merchant_name = merchant_name.gsub("Nhl", "NHL")
+                            - if merchant_name.include? "Nba"
+                              - merchant_name = merchant_name.gsub("Nba", "NBA")
+
+                            = link_to "#{merchant_name}", merchant.advertiser_url, :id => "merchant_popup_#{merchant.advertiser_id}", :class => "mpc_link", :onclick => "generate_popup(this.id, #{merchant.advertiser_id}, #{merchant.coupons.blank?}); return false;"
+                            = link_to "coupon_window", mm_prompt_cc_window_path(:ad => merchant.advertiser_id, :type => merchant.class.name, :offer_url => merchant.advertiser_url), :style => "display:none;", :id => "merchant_c_window_#{merchant.advertiser_id}"
+                          - else
+                            = link_to "#{m}", "javascript:void(0);", :id => "merchant_popup_", :class => "mpc_link"

@@ -1,0 +1,62 @@
+- content_for :sub_nav do
+  = render 'users/profile/sub_nav', :active_action=>'index', :active_controller=>'funds_withdrawals'
+= render "withdrawal_request_errors"
+= render 'users/shared/header_score'
+- content_for :main_column do
+  %section.default-content.clearfix#earnings
+    %article.details-preview#customer-earnings
+      %h3
+        YOUR EARNINGS
+        - tip = "Your current MuddleMe earnings. You must earn at least $30 to make your first withdrawal. After that, you may withdrawal funds at any time."
+        = image_tag 'pixel.gif', :class=>'qmark', :title=>tip
+      %hr
+      %p
+        %span.label
+          = 'TOTAL BALANCE: '
+        %span.dollars
+          = format_currency(current_user.total_balance)
+      %p
+        %span.label
+          = 'Available balance: '
+        %span.dollars
+          = format_currency(current_user.balance || 0)
+      %p
+        %span.label
+          = 'Pending outcome : '
+        %span.dollars
+          = link_to format_currency(current_user.unconfirmed_earnings), '/search_requests#unconfirmed_search_requests_wrap'
+      %hr
+      %p
+        %span.label{:style=>'min-width: 0'}
+          Withdraw Funds:
+        %span.important
+          ($30 minimum withdrawal)
+      #funds-withdrawal-form-wrap
+        = render 'form'
+    %article.column.half-col
+      %h3 EARNINGS FROM SEARCH REQUESTS
+      %hr.for-table
+      #earnings_table_wrap
+        = render 'earnings_table'
+    %article.column.half-col.last-child
+      %h3 WITHDRAWALS
+      %hr.for-table
+      #withdrawal_table_wrap
+        = render 'withdrawal_table'
+
+
+%h2 My Earnings
+= render 'layouts/application/one_column'
+
+- content_for :javascripts do 
+  %script
+    :plain
+      $('#funds-withdrawal-form-wrap form:first').live('submit',function(){
+        showLoader($('#funds-withdrawal-form-wrap'));
+      });
+
+- content_for :javascripts do
+  %script
+    :plain
+      simpleAjaxPagination('#earnings_table_wrap');
+      simpleAjaxPagination('#withdrawal_table_wrap');

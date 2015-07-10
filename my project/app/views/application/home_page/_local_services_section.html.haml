@@ -1,0 +1,19 @@
+%section
+  .part-6
+    .container
+      .col-md-6.pull-right
+        %h3 Don’t forget about your local services!
+        %p When you join Muddleme, you’ll get a personalized money box to receive local deals and cash back for calling and transacting with your favorite service providers.
+        %br/
+        %p{:style => "padding-bottom:30px;"} Get as much as $45 deposited directly into your account for calling Dish TV!
+        - if current_user.blank?
+          = link_to "Join for FREE", hp_direct_sign_up_path, :id => "direct_user_sign_up", :onClick => "generate_direct_sign_up_form();", :class => "pull-right join-for-free"
+          %br/
+          %br/
+          %br/
+          %p.pull-right 
+            = "Already joined?"
+            = link_to "Log in", "/login", :class => "log-in", :style => "background:none; padding:0px;"
+        - else
+          %p.button-join-for-free.margin-bottom-0.rb_bold{:style => "margin-top:33px;margin-right:2px;"}
+            = link_to "Try Below #{image_tag('bottom-arrow.png')}".html_safe, 'javascript:void(0);', :id => "direct_user_sign_up2", :class => "join-for-free"   

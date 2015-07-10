@@ -1,0 +1,14 @@
+%section
+  .part-11.img-responsive
+    .container
+      .col-lg-8.col-md-8.col-sm-12.col-xs-12
+        %h1 We’re an app, too!
+        %p A picture’s worth a thousand words - Now it’s also worth cash. Our Envy app will identify your photo, find participating stores, provide coupons and give you cash back. Cha-Ching!
+        %br/
+        %a{:href => "#"}
+          %img{:alt => "", :src => "/assets/apple-apps.jpg"}/
+        %a{:href => "#"}
+          %img{:alt => "", :src => "/assets/google-apps.jpg"}/
+        %p Or enter your phone number to text yourself the app!
+        = render "/application/home_page/sms_module"
+= render 'application/home_page/coming_soon_popup'

@@ -1,0 +1,59 @@
+- unless @all_top_deals.blank?
+  %section
+  .part-10.text-center.bottom-padding
+    .container
+      .row
+        - @all_top_deals[0..3].each_with_index do |advertiser,i|
+          .col-lg-3.col-md-4.col-sm-6.col-xs-12
+            .boxs
+              .img_box{:style => "width:auto; height:160px;"}
+                %span{:style => "border: 1px solid #666; float: left; width: 100%; height: auto;"}
+                  %img{:alt => "", :src => fetch_image_of_advertiser(advertiser, 'medium'), :style => "height:160px;",:title => advertiser.name, :id => "merchant_popup_#{advertiser.advertiser_id}",:class => "image-responsive custom-link", :onclick => "generate_popup(this.id, #{advertiser.advertiser_id}, #{advertiser.coupons.blank?}); return false;"}/
+              = link_to "coupon_window", mm_prompt_cc_window_path(:ad => advertiser.advertiser_id, :type => advertiser.class.name, :offer_url => advertiser.advertiser_url), :style => "display:none;", :id => "merchant_c_window_#{advertiser.advertiser_id}"
+
+
+              - coupon = advertiser.coupons.where(['expires_at IS NULL or expires_at >= ?', Date.today]).first
+              - coupon_description = coupon.description rescue nil
+              - coupon_description = '' if coupon_description.blank?
+
+              - couponcode = advertiser.coupons.where(['expires_at IS NULL or expires_at >= ?', Date.today]).first
+              - coupon_code = couponcode.code rescue nil
+
+              %h2{:style => "height:42px;"}
+                = advertiser.hp_advertiser_image.nil? ? '' : advertiser.hp_advertiser_image.description
+
+              .ms-discounttxt
+                = "#{number_to_percentage(advertiser.max_commission_percent, {:precision => 1, :strip_insignificant_zeros => true})} Cash Back"
+
+              .btm-button
+                = link_to advertiser.hp_advertiser_image.nil? ? '' : advertiser.hp_advertiser_image.title, "javascript:;", :class => "btm-button-st"
+                = link_to "SHOP NOW", advertiser.advertiser_url, :target => "_blank", :id => "merchant_popup_#{advertiser.advertiser_id}", :onclick => "generate_popup(this.id, #{advertiser.advertiser_id}, #{advertiser.coupons.blank?}); return true;"
+                  
+                
+                                            
+      .row
+        - @all_top_deals[4..8].each_with_index do |advertiser,i|
+          .col-lg-3.col-md-4.col-sm-6.col-xs-12
+            .boxs
+              .img_box{:style => "width:auto; height:160px;"}
+                %span{:style => "border: 1px solid #666; float: left; width: 100%; height: auto;"}
+                  %img{:alt => "", :src => fetch_image_of_advertiser(advertiser, 'medium'), :style => "height:160px;",:title => advertiser.name, :id => "merchant_popup_#{advertiser.advertiser_id}",:class => "image-responsive custom-link", :onclick => "generate_popup(this.id, #{advertiser.advertiser_id}, #{advertiser.coupons.blank?}); return false;"}/
+              = link_to "coupon_window", mm_prompt_cc_window_path(:ad => advertiser.advertiser_id, :type => advertiser.class.name, :offer_url => advertiser.advertiser_url), :style => "display:none;", :id => "merchant_c_window_#{advertiser.advertiser_id}"
+
+
+              - coupon = advertiser.coupons.where(['expires_at IS NULL or expires_at >= ?', Date.today]).first
+              - coupon_description = coupon.description rescue nil
+              - coupon_description = '' if coupon_description.blank?
+
+              - couponcode = advertiser.coupons.where(['expires_at IS NULL or expires_at >= ?', Date.today]).first
+              - coupon_code = couponcode.code rescue nil
+
+              %h2{:style => "height:42px;"}
+                = advertiser.hp_advertiser_image.nil? ? '' : advertiser.hp_advertiser_image.description
+
+              .ms-discounttxt
+                = "#{number_to_percentage(advertiser.max_commission_percent, {:precision => 1, :strip_insignificant_zeros => true})} Cash Back"
+
+              .btm-button
+                = link_to advertiser.hp_advertiser_image.nil? ? '' : advertiser.hp_advertiser_image.title, "javascript:;", :class => "btm-button-st"
+                = link_to "SHOP NOW", advertiser.advertiser_url, :target => "_blank", :id => "merchant_popup_#{advertiser.advertiser_id}", :onclick => "generate_popup(this.id, #{advertiser.advertiser_id}, #{advertiser.coupons.blank?}); return true;"

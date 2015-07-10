@@ -1,0 +1,16 @@
+%article#email-contacts.details-preview
+  %p
+    %span.label Invite your contacts:
+    %br
+    %span (Gmail, Yahoo, Hotmail, AOL, ect.)
+
+  = form_tag({:action=>'get_contact_list'}, :remote=>true, :id=>'get-contacts-form') do
+    %div.input
+      = label_tag 'email_username', "E-mail:"
+      = text_field_tag 'email_username'
+    %div.input
+      = label_tag 'email_password', "Password:"
+      = password_field_tag 'email_password'
+    .actions
+      = submit_tag 'Import Gmail contacts', :name=>'gmail', :class=>"fixed-width-button"
+      = submit_tag 'Import Yahoo contacts', :name=>'ymail', :class=>"fixed-width-button"

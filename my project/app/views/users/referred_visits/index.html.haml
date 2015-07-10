@@ -1,0 +1,71 @@
+- referral_url = referred_by_user_url(current_user.encoded_id)
+
+- content_for :sub_nav do
+  = render 'users/profile/sub_nav', :active_action=>'index', :active_controller=>'users/referred_visits'
+
+
+= render 'users/shared/header_score'
+- content_for :main_column do
+  %section.default-content.clearfix#referrals
+    %div#referrals-picture
+    %h3= "Receive #{ReferredVisit::EARNINGS_PER_REFERRED_USER_PERCENTAGE}% of all your friend’s earnings for 1 year when they register and use the Muddleme platform. Get paid for everything they do."
+    %hr
+
+    %div.column
+      = render "email_contacts"
+      = render "direct_email"
+      = render "referred_users"
+
+    %div.column
+      = render "social_contacts", :referral_url=>referral_url
+      = render "direct_link", :referral_url=>referral_url
+
+
+    #contacts-list-dialog{:style=>'display: none'}
+
+%h2 Invite your friends to MuddleMe
+= render 'layouts/application/one_column'
+
+
+- content_for :javascripts do
+  = javascript_include_tag "zclip"
+
+  %script
+    :plain
+      simpleAjaxPagination('#referred_users_table_wrap');
+      //select text in input on click
+      $('#link-text-input').live('focus mouseup', function(e) {
+        if (e.type == 'focusin') this.select();
+        if (e.type == 'mouseup') return false;
+      });
+      //copy link to clipboard on click
+      $('#copy-link-to-clipboard').zclip({
+          path:'ZeroClipboard.swf',
+          copy: $('#link-text-input').data('original-value')
+      });
+      
+      $('#send-invites-textarea-form').live('submit', function(){
+        showLoader($('#direct-email'), 'Sending invites to users you\'ve specyfied')
+      });
+      $('#send-invites-checkbox-form').live('submit', function(){
+        showLoader($('#contacts-list-dialog'), 'Sending invites to users you\'ve specyfied')
+      });
+      $('#get-contacts-form').live('submit', function(){
+        $('#contacts-list-dialog').dialog('open');
+        showLoader($('#contacts-list-dialog'), 'Retreving your contact list')
+      });
+
+      initDialog('#contacts-list-dialog', undefined, {
+        title : 'Choose contacts to send invites to'
+      });
+
+      $('#check-all-contact-checkboxes').live('change', function(){
+        $('input[name="contacts[]"]').attr('checked', $(this).is(':checked'));
+      });
+
+      $('#social a').live('click', function() {
+        var val = $('#social_text').val()
+        this.href= $(this).data('href').replace('_text_', val);
+      })
+      
+      

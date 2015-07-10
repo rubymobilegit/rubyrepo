@@ -1,0 +1,11 @@
+%article#direct-email.details-preview
+  %p
+    %span.label Send invites via e-mail:
+    %br
+    %span (separate emails with a return or comma)
+
+  = form_tag({:action=>'send_email_invites'}, :remote=>true, :id=>'send-invites-textarea-form') do
+    %div.input
+      = text_area_tag 'emails'
+    %div.actions
+      = submit_tag 'Send invites', :class=>"fixed-width-button"

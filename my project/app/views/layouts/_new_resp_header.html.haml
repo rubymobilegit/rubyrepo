@@ -1,0 +1,57 @@
+%header
+  .header-area
+    .container
+      .col-lg-2.col-md-2.col-sm-12.col-xs12.pull-left
+        %a{:href => "/profiles"}
+          = image_tag("logo_new.png", :id => "logo", :class => "image-responsive")
+      .col-lg-7.col-md-7.text-center
+        %ul.top-menu
+          %li
+            %a{:href => "/"} Home
+          %li.dropdown
+            %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+              Products
+              %span.caret
+          %li
+            %a{:href => "/referral"} Referral
+          %li
+            %a{:href => "/company"} Business
+          %li
+            %a{:href => about_path} About Us
+          %li
+            %a{:href => 'http://muddleme.blog.com', :target => 'blank'} Blog
+        / responsive-menu
+        %nav.demo.hidden-lg.hidden-md
+          .menubtn
+            %a{:href => "#"} Menu
+            Button
+          %ul#nav
+            %li
+              %a{:href => "/"} Home
+            %li
+              %a{:href => "/"} Products
+            %li
+              %a{:href => "/referral"} Referral
+            %li
+              %a{:href => "/company"} Business
+            %li
+              %a{:href => about_path} About Us
+            %li
+              %a{:href => 'http://muddleme.blog.com', :target => 'blank'} Blog
+      / responsive-menu
+      .col-lg-3.col-md-3.pull-right.login-sec{:style => "color:#f6f6f6;font-family:'RobotoSlab-Regular';margin-top:1%;"}
+        .pull-right
+          - if current_user.blank?
+            %a{:href => "/login", :style => "color:#f6f6f6;margin-right:5px;"}
+              %i.fa.fa-key
+              %span{:style => "margin-right:15px;"} Sign In
+            %a{:href => "/signup", :style => "color:#f6f6f6;margin-right:5px;"}
+              %i.fa.fa-lock
+              %span Sign Up
+          - else
+            %a{:href => funds_withdrawals_path, :style => "color:#f6f6f6;margin-right:5px;"}
+              %i.fa.fa-lock
+              %span{:style => "margin-right:15px;"} Balance:
+              %span.dollars{:style => "color:#9dc700 !important;"}= format_currency(current_user.total_balance || 0)
+            = link_to raw("<span>Sign out</span>"), destroy_user_session_path, :method=>'delete', :id=>'logout-link',:style => "color:#f6f6f6;margin-right:5px;"
+

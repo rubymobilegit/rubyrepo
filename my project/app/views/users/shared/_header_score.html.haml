@@ -1,0 +1,6 @@
+#header-score
+  Your MuddleMe Score
+  - tip = "Your MuddleMe score indicates your value to MuddleMe vendors. It’s based on your likelihood to complete a purchase and the completeness of your profile."
+  = image_tag 'pixel.gif', :class=>'qmark', :title=>tip
+  .small-score-stamp
+    = current_user.score

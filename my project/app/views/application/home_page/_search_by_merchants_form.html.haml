@@ -1,0 +1,10 @@
+%section
+  .part-2
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12.text-center
+      .container
+        = form_tag('/hp_mm_box_merchants_search', :method => "post", :id => "sbm_search_bar", :class => "search-form navbar-form") do
+          = autocomplete_field_tag 'search_by_merchants', params[:search_by_merchants], '/search/autocomplete_muddleme_search', :size => 75, :placeholder => "Macy's, JCPenney, Target...", :autocomplete => "off", :class => "search rb_medium", :id => "search"
+
+          %a{:href => "javascript:;", :onclick => "$('#sbm_search_bar').submit();"} SEARCH
+          %h1 Coupons and Cash Back from your Favorite Stores
+

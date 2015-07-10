@@ -1,0 +1,18 @@
+.container-fluid
+  .row
+    .popup_window
+      %h2.zipcodePopTitle
+        For Local Merchants We need
+        %br>/
+        your Zipcode
+      %p
+        = form_tag("#", :id => "sbs_zip_code_form", :class => "navbar-form") do
+          #zip-code-form-errors.text-center.text-danger
+          = hidden_field_tag :service_keyword, params[:search_by_services]
+          = hidden_field_tag :user_id, "#{current_user.id rescue nil}", :class => 'zip-user-id'
+          = text_field_tag :ss_zip_code, {}, :placeholder => "Zip code",  :autocomplete => "off", :class => "form-control"
+          = submit_tag 'Submit', :onClick => "generate_services_search_results_popup(); return false;", :id => "sbs_zc_subBtn", :class => "btn btn-primary-custom"
+          = link_to "services results", hp_mm_box_services_search_path, :id => "services_results_popup_with_zc", :style => "display:none;"
+        %br
+        %p.zipTxtCash To get cash back for all calls placed and completed
+        %p.zipTxtTrans transactions don't forget to #{link_to 'register', new_user_registration_path} or #{link_to 'sign in', new_user_session_path}
